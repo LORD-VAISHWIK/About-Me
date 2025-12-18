@@ -10,13 +10,6 @@ const BackgroundCanvas = ({ type }) => {
 
     const ctx = canvas.getContext('2d');
     let animationFrameId;
-    const isMobile = window.innerWidth < 768;
-
-    // On mobile, completely disable canvas to prevent "black box" artifacts
-    if (isMobile) {
-      canvas.style.display = 'none';
-      return;
-    }
 
     const resize = () => {
       const parent = canvas.parentElement;
@@ -63,7 +56,8 @@ const BackgroundCanvas = ({ type }) => {
         }));
 
         const draw = () => {
-          ctx.clearRect(0, 0, width, height);
+          ctx.fillStyle = '#02040a';
+          ctx.fillRect(0, 0, width, height);
           const rect = canvas.getBoundingClientRect();
           const mx = mouseRef.current.x - rect.left;
           const my = mouseRef.current.y - rect.top;
@@ -127,7 +121,8 @@ const BackgroundCanvas = ({ type }) => {
         }
 
         const draw = () => {
-          ctx.clearRect(0, 0, width, height);
+          ctx.fillStyle = '#02040a';
+          ctx.fillRect(0, 0, width, height);
           travelers.forEach((t, i) => {
             t.progress += 1;
             let tipX = t.x, tipY = t.y;
@@ -202,7 +197,8 @@ const BackgroundCanvas = ({ type }) => {
         }
 
         const draw = () => {
-          ctx.clearRect(0, 0, width, height);
+          ctx.fillStyle = '#02040a';
+          ctx.fillRect(0, 0, width, height);
           const rect = canvas.getBoundingClientRect();
           const mx = mouseRef.current.x - rect.left;
           const my = mouseRef.current.y - rect.top;
@@ -249,7 +245,8 @@ const BackgroundCanvas = ({ type }) => {
       } else if (type === 'contact') {
         let time = 0;
         const draw = () => {
-          ctx.clearRect(0, 0, width, height);
+          ctx.fillStyle = '#02040a';
+          ctx.fillRect(0, 0, width, height);
           time += 0.01;
           const waves = [
             { color: 'rgba(59, 130, 246, 0.3)', freq: 0.01, offset: 0 },
