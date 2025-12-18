@@ -39,26 +39,21 @@
   }
   
   .glass-card {
-    /* Mobile: Ultra-simple solid card with NO effects that could cause artifacts */
-    background-color: #0d1324;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Base styles */
     position: relative;
     overflow: hidden;
-    /* Force new stacking context to prevent canvas bleeding */
-    isolation: isolate;
-    /* Disable all GPU acceleration on mobile */
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-  }
-  
-  /* Desktop only: Add back the premium effects */
-  @media (min-width: 768px) {
-    .glass-card {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    /* Mobile: Use semi-transparent background WITHOUT blur or shadow to fix the "black box" glitch */
+    background-color: rgba(13, 19, 36, 0.9);
+    
+    /* Desktop: Enable full glassmorphism and shadows */
+    @media (min-width: 1024px) {
+      background-color: rgba(255, 255, 255, 0.02);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      background: rgba(255, 255, 255, 0.02);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-      transform: translateZ(0) translateX(0);
+      transform: translateZ(0);
     }
   }
 
@@ -66,19 +61,13 @@
     @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400;
   }
 
-  .animate-marquee {
-    will-change: transform;
-  }
-
-  /* Project cards: Extra protection against mobile artifacts */
+  /* Project cards: Ensure clean rendering */
   .project-card {
-    /* Force solid rendering on mobile */
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+    border-radius: 1rem;
   }
 
-  /* Hover effects for projects - Only on desktop */
-  @media (hover: hover) and (min-width: 768px) {
+  /* Hover effects for projects - Strictly desktop only */
+  @media (hover: hover) and (min-width: 1024px) {
     .project-grid:hover .project-card {
       @apply opacity-30 scale-[0.98] transition-all duration-500;
     }
