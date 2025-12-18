@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --nav-h: 4rem;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --timeline-dot-offset: clamp(2rem, 5vw, 3.25rem);
+  }
+
+  html {
+    font-size: clamp(15px, 0.35vw + 14px, 18px);
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background min-h-screen overflow-x-hidden;
+  }
+
+  section {
+    scroll-margin-top: calc(var(--nav-h) + var(--safe-top) + 1rem);
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-[rgba(10,15,30,0.7)] backdrop-blur-[16px] border-b border-white/5;
+  }
+  
+  .glass-card {
+    @apply bg-white/[0.02] backdrop-blur-[12px] border border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.2)] relative overflow-hidden;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400;
+  }
+
+  /* Hover effects for projects */
+  @media (hover: hover) {
+    .project-grid:hover .project-card {
+      @apply opacity-30 blur-[3px] grayscale scale-[0.96] transition-all duration-500;
+    }
+
+    .project-grid .project-card:hover {
+      @apply opacity-100 blur-0 grayscale-0 scale-110 -translate-y-[10px] z-[100] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.9),0_0_30px_rgba(59,130,246,0.4)] border-blue-500/40 bg-[#0b1120] !important;
+    }
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+::-webkit-scrollbar-track {
+  background: #02040a;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #3b82f6, #06b6d4);
+  border-radius: 0.25rem;
+}
+
