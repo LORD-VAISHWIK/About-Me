@@ -10,6 +10,13 @@ const BackgroundCanvas = ({ type }) => {
 
     const ctx = canvas.getContext('2d');
     let animationFrameId;
+    const isMobile = window.innerWidth < 768;
+
+    // On mobile, completely disable canvas to prevent "black box" artifacts
+    if (isMobile) {
+      canvas.style.display = 'none';
+      return;
+    }
 
     const resize = () => {
       const parent = canvas.parentElement;

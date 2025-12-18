@@ -39,11 +39,27 @@
   }
   
   .glass-card {
-    /* Mobile: Solid background, no blur, no shadow to prevent "black box" glitch */
-    @apply bg-[#0d1324] border border-white/10 relative overflow-hidden;
-    
-    /* Desktop: Restore the premium glass effect and shadows using Tailwind responsive prefixes */
-    @apply md:backdrop-blur-[12px] md:bg-white/[0.02] md:shadow-[0_4px_20px_rgba(0,0,0,0.3)] md:transform-gpu;
+    /* Mobile: Ultra-simple solid card with NO effects that could cause artifacts */
+    background-color: #0d1324;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    /* Force new stacking context to prevent canvas bleeding */
+    isolation: isolate;
+    /* Disable all GPU acceleration on mobile */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+  
+  /* Desktop only: Add back the premium effects */
+  @media (min-width: 768px) {
+    .glass-card {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.02);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      transform: translateZ(0) translateX(0);
+    }
   }
 
   .text-gradient {
@@ -54,8 +70,15 @@
     will-change: transform;
   }
 
+  /* Project cards: Extra protection against mobile artifacts */
+  .project-card {
+    /* Force solid rendering on mobile */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
   /* Hover effects for projects - Only on desktop */
-  @media (hover: hover) {
+  @media (hover: hover) and (min-width: 768px) {
     .project-grid:hover .project-card {
       @apply opacity-30 scale-[0.98] transition-all duration-500;
     }
