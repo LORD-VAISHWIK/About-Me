@@ -39,10 +39,13 @@
   }
   
   .glass-card {
-    /* Use a solid, slightly transparent background on mobile to prevent "shadow box" artifact and lag */
-    @apply bg-[#0d1324] border border-white/10 shadow-[0_4px_12px_rgba(0,0,0,0.5)] relative overflow-hidden transform-gpu;
-    /* Only enable expensive blur on desktop */
-    @apply backdrop-blur-none md:backdrop-blur-[12px] md:bg-white/[0.02];
+    /* Mobile: Solid background, no blur, no shadow to prevent "black box" glitch */
+    @apply bg-[#0d1324] border border-white/10 relative overflow-hidden;
+    
+    /* Desktop: Restore the premium glass effect and shadows */
+    @media (min-width: 768px) {
+      @apply backdrop-blur-[12px] bg-white/[0.02] shadow-[0_4px_20px_rgba(0,0,0,0.3)] transform-gpu;
+    }
   }
 
   .text-gradient {
