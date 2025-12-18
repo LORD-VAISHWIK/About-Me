@@ -42,10 +42,8 @@
     /* Mobile: Solid background, no blur, no shadow to prevent "black box" glitch */
     @apply bg-[#0d1324] border border-white/10 relative overflow-hidden;
     
-    /* Desktop: Restore the premium glass effect and shadows */
-    @media (min-width: 768px) {
-      @apply backdrop-blur-[12px] bg-white/[0.02] shadow-[0_4px_20px_rgba(0,0,0,0.3)] transform-gpu;
-    }
+    /* Desktop: Restore the premium glass effect and shadows using Tailwind responsive prefixes */
+    @apply md:backdrop-blur-[12px] md:bg-white/[0.02] md:shadow-[0_4px_20px_rgba(0,0,0,0.3)] md:transform-gpu;
   }
 
   .text-gradient {
