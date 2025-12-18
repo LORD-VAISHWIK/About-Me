@@ -17,17 +17,14 @@
 
   body {
     @apply bg-background min-h-screen overflow-x-hidden;
-    /* Disable expensive grain texture on mobile to prevent lag */
-    background-image: none;
   }
 
+  /* Suble Grain Overlay - Only on Desktop for performance */
   @media (min-width: 1024px) {
-    body {
+    body::before {
+      content: "";
+      @apply fixed inset-0 z-[1] pointer-events-none opacity-[0.03] brightness-100 contrast-150;
       background-image: url('https://grainy-gradients.vercel.app/noise.svg');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      opacity: 0.98;
     }
   }
 
