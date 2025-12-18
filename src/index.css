@@ -17,6 +17,18 @@
 
   body {
     @apply bg-background min-h-screen overflow-x-hidden;
+    /* Disable expensive grain texture on mobile to prevent lag */
+    background-image: none;
+  }
+
+  @media (min-width: 1024px) {
+    body {
+      background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      opacity: 0.98;
+    }
   }
 
   section {
@@ -26,25 +38,33 @@
 
 @layer components {
   .glass {
-    @apply bg-[rgba(10,15,30,0.7)] backdrop-blur-[16px] border-b border-white/5;
+    @apply bg-[#0a0f1e]/80 backdrop-blur-none md:backdrop-blur-[16px] border-b border-white/5;
   }
   
   .glass-card {
-    @apply bg-white/[0.02] backdrop-blur-[12px] border border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.2)] relative overflow-hidden;
+    /* Use a solid, slightly transparent background on mobile to prevent "shadow box" artifact and lag */
+    @apply bg-[#0d1324] border border-white/10 shadow-[0_4px_12px_rgba(0,0,0,0.5)] relative overflow-hidden transform-gpu;
+    /* Only enable expensive blur on desktop */
+    @apply backdrop-blur-none md:backdrop-blur-[12px] md:bg-white/[0.02];
   }
 
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400;
   }
 
-  /* Hover effects for projects */
+  .animate-marquee {
+    will-change: transform;
+  }
+
+  /* Hover effects for projects - Only on desktop */
   @media (hover: hover) {
     .project-grid:hover .project-card {
-      @apply opacity-30 blur-[3px] grayscale scale-[0.96] transition-all duration-500;
+      @apply opacity-30 scale-[0.98] transition-all duration-500;
     }
 
     .project-grid .project-card:hover {
-      @apply opacity-100 blur-0 grayscale-0 scale-110 -translate-y-[10px] z-[100] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.9),0_0_30px_rgba(59,130,246,0.4)] border-blue-500/40 bg-[#0b1120] !important;
+      @apply opacity-100 scale-105 -translate-y-[8px] z-[100] !important;
+      @apply shadow-[0_15px_30px_-5px_rgba(0,0,0,0.6),0_0_15px_rgba(59,130,246,0.2)] border-blue-500/40 bg-[#0b1120] !important;
     }
   }
 }
